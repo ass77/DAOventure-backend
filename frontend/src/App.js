@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import axios from 'axios';
+import Carlist from './components/carList';
 
 function App() {
 
@@ -11,6 +13,7 @@ function App() {
 
   const onSubmit = (e) => {
     e.preventDefault();
+
     const data = [...sales];
     data.push({
       sku,
@@ -18,6 +21,19 @@ function App() {
       name,
       price,
     });
+
+    try {
+      axios.post('http://localhost:5000/api/v1/cars/addcar', {
+        sku,
+        model,
+        name,
+        price,
+      })
+
+    } catch (error) {
+      console.log(error);
+    }
+
     setSales(data);
     setSKU('');
     setModel('');
@@ -26,41 +42,53 @@ function App() {
 
   };
 
+  useEffect(() => {
+    const getCars = async () => {
+      try {
+
+        axios.get('http://localhost:5000/api/v1/cars/allcars')
+          .then(res => {
+            console.log(res.data)
+            setSales(res.data);
+          })
+
+      } catch (error) {
+        console.log(error)
+      }
+
+    }
+    getCars();
+  }, []);
+
+
+
   return (
     <div className="App">
-      <h2>Car Sales Mini Mern Web3</h2>
-      <h4>List of sales</h4>
+      <h2>Car Sales MERN DAOventure</h2>
+      <h4>List of car sales</h4>
       <div style={{
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
       }}>
-        <ul>
-          {sales.map((sale, index) => (
-            <li key={index}>
-              <span>SKU: {sale.sku}</span>
-              <span>Model: {sale.model}</span>
-              <span>Name: {sale.name}</span>
-              <span>Price: {sale.price}</span>
-            </li>
-          ))}
-        </ul>
+        <Carlist data={sales} />
       </div>
+      <h2>Add a new car</h2>
       <form onSubmit={onSubmit}>
         <div style={{
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
         }}>
-        <label>SKU:</label>
-        <input type="text" value={sku} onChange={(e) => setSKU(e.target.value)} />
-        <label>Model:</label>
-        <input type="text" value={model} onChange={(e) => setModel(e.target.value)} />
-        <label>Name:</label>
-        <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-        <label>Price:</label>
-        <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
-        <button style={{marginTop: '30px'}} type="submit">Submit</button>
+          <label>SKU:</label>
+          <input required type="text" value={sku} onChange={(e) => setSKU(e.target.value)} />
+          <label>Model:</label>
+          <input required type="text" value={model} onChange={(e) => setModel(e.target.value)} />
+          <label>Name:</label>
+          <input required type="text" value={name} onChange={(e) => setName(e.target.value)} />
+          <label>Price:</label>
+          <input required type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
+          <button style={{ marginTop: '30px' }} type="submit">Submit</button>
         </div>
       </form>
     </div>

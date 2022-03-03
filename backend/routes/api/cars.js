@@ -1,27 +1,56 @@
 const express = require('express');
 const router = express.Router();
-const Car = require("./models/Car") // new
-const uuid = require('uuidv4');
+// const Car = require('./models/Car')
+require('dotenv').config()
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_NAME}.suhzp.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 
-router.get('/allCars', async (req, res) => {
-    // const cars = await Car.find();
-    res.send('List of car');
+
+router.get('/allcars', async (req, res) => {
+    const client = new MongoClient(uri);
+    try {
+        await client.connect()
+        const db = client.db('dao-car');
+        const collection = db.collection('cars');
+        const allCars = await collection.find({}).toArray();
+        res.send(allCars);
+    } catch (err) {
+        console.error(err)
+    }
 });
 
-router.post('/addCar', async (req, res) => {
+router.post('/addcar', async (req, res) => {
+    const client = new MongoClient(uri);
 
-    // const car = new Car({
-    //     id: uuid(),
-    //     sku: req.body.sku,
-	// 	price: req.body.price,
-	// 	model: req.body.model,
-    //     name: req.body.name,
-	// })
+    const {
+        sku,
+        model,
+        name,
+        price
+    } = req.body;
 
+    //save req.body to database
 
-	// await post.save()
+    try {
+        await client.connect()
 
-    res.send(`Add new car with SKU: ${uuid()}`);
-})
+        const db = client.db('dao-car');
+        const collection = db.collection('cars');
+        const newCar = {
+            sku,
+            model,
+            name,
+            price
+        }
+        await collection.insertOne(newCar);
+        res.send(newCar);
+
+    } catch (error) {
+        console.log(error)
+
+    }
+
+});
+
 
 module.exports = router;
