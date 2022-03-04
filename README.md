@@ -9,22 +9,13 @@ The system should consists of several functions:
 [x] Add new car into inventory
 [x] Record car sales record with car identity
 
-```
 Car entity consists of:
-Price
-SKU
-Car Model
-Car Name
-```
+- Price
+- SKU
+- Car Model
+- Car Name
 
-to start frontend
+### Install Dependencies and Run locally
 
-1. go to frontend folder
-2. run `npm install` to install dependencies
-3. run `npm start` to start up the web server locally
-
-to start backend
-
-1. go to backend folder
-2. run `npm install` to install dependencies
-3. run `npm run dev` to start server locally
+1. `npm install` to install dependencies
+2. `npm run dev` to start server locally
