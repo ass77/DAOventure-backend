@@ -28,7 +28,7 @@ jobs:
         run: |
           touch .env
             echo DB_NAME = ${{secret.DB_NAME}} >> .env
-						echo DB_USERNAME = ${{secret.DB_USERNAME}} >> .env
+            echo DB_USERNAME = ${{secret.DB_USERNAME}} >> .env
             echo DB_PASSWORD = ${{secret.DB_PASSWORD}} >> .env
             cat .env
       
