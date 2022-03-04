@@ -44,12 +44,12 @@ jobs:
           gcloud run deploy daoventure-backend \
           --project ${{ secrets.GCP_PROJECT_ID }} \
           --port 5000 \
+          --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/daoventure-backend:$${{ github.sha }} \
           --region asia-southeast1 \
           --service-account=${{ secrets.GCP_SA_EMAIL }} \
           --set-env-vars DB_NAME=${{ secrets.DB_NAME }} \
           --set-env-vars DB_USERNAME=${{ secrets.DB_USERNAME }} \
           --set-env-vars DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
-          --image gcr.io/devops-training-337901/daoventure-backend \
           --platform managed \
           --allow-unauthenticated \
           --quiet
