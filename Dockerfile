@@ -8,7 +8,7 @@ ENV PORT 5000
 WORKDIR /usr/src/app
 
 # Install app dependencies
-COPY backend/package*.json ./
+COPY package*.json ./
 
 # Install production dependencies.
 RUN npm ci --only=production
