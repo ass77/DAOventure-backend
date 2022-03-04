@@ -49,7 +49,7 @@ jobs:
           --set-env-vars DB_NAME=${{ secrets.DB_NAME }} \
           --set-env-vars DB_USERNAME=${{ secrets.DB_USERNAME }} \
           --set-env-vars DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
-          --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/daoventure-backend \
+          --image gcr.io/devops-training-337901/daoventure-backend \
           --platform managed \
           --allow-unauthenticated \
           --quiet
