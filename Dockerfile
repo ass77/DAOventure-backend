@@ -11,11 +11,11 @@ WORKDIR /usr/src/app
 COPY backend/package*.json ./
 
 # Install production dependencies.
-RUN cd backend && npm ci --only=production
+RUN npm ci --only=production
 
 # Bundle app source
 COPY . ./
 
 EXPOSE 5000
-CMD [ "cd","backend", "&&" , "npm", "start" ]
+CMD [ "npm", "start" ]
 
