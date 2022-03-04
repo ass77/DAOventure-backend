@@ -27,9 +27,9 @@ jobs:
       - name: Add and Write environment file
         run: |
           touch .env
-            echo DB_NAME = ${{secret.DB_NAME}} >> .env
-            echo DB_USERNAME = ${{secret.DB_USERNAME}} >> .env
-            echo DB_PASSWORD = ${{secret.DB_PASSWORD}} >> .env
+            echo DB_NAME = ${{secrets.DB_NAME}} >> .env
+            echo DB_USERNAME = ${{secrets.DB_USERNAME}} >> .env
+            echo DB_PASSWORD = ${{secrets.DB_PASSWORD}} >> .env
             cat .env
       
       - name: Build
@@ -48,9 +48,9 @@ jobs:
           --region asia-southeast1 \
           --service-account ${{ secrets.GCP_SA_EMAIL }} \
           --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/daoventure-backend \
-          --set-env-vars DB_NAME=${{DB_NAME}}
-          --set-env-vars DB_USERNAME=${{secret.DB_USERNAME}}
-          --set-env-vars DB_PASSWORD=${{DB_PASSWORD}}
+          --set-env-vars DB_NAME=${{secrets.DB_NAME}}
+          --set-env-vars DB_USERNAME=${{secrets.DB_USERNAME}}
+          --set-env-vars DB_PASSWORD=${{secrets.DB_PASSWORD}}
           --platform managed \
           --allow-unauthenticated \
           --quiet
