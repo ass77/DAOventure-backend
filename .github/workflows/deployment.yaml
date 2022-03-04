@@ -39,12 +39,13 @@ jobs:
       - name: Push
         run: |
           docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/daoventure-backend:${{  github.sha }}
+
       - name: Deploy
         run: |
           gcloud run deploy daoventure-backend \
           --project ${{ secrets.GCP_PROJECT_ID }} \
           --port 5000 \
-          --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/daoventure-backend:$${{ github.sha }} \
+          --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/daoventure-backend:${{ github.sha }} \
           --region asia-southeast1 \
           --service-account=${{ secrets.GCP_SA_EMAIL }} \
           --set-env-vars DB_NAME=${{ secrets.DB_NAME }} \
