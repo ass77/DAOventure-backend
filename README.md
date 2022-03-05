@@ -19,3 +19,5 @@ Car entity consists of:
 
 1. `npm install` to install dependencies
 2. `npm run dev` to start server locally
+
+[Frontend repository](https://github.com/ass77/DAOventure-frontend)
